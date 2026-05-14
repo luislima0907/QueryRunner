@@ -1,29 +1,35 @@
-"""
-    Módulo que debe implementar la lógica de construcicón del plan de ejecución de consulta
-    basado en la gramática definida y uso de herramienta ANTLR para su transformación
-    este plan es entregado al engine quien se ecargará de ejecutar la consulta final al archivo Físico
-    y Devolver los resultados
-"""
+from antlr4 import InputStream, CommonTokenStream
 
-"""
-Pipeline completo:
-SQL -> AST -> Logical Plan -> Physical Plan -> IR
-"""
+from gramar.QueryRunnerLexer import QueryRunnerLexer
+from compiler.syntax_error_listener import ThrowingErrorListener
+from gramar.QueryRunnerParser import QueryRunnerParser
+from compiler.query_plan_visitor import QueryPlanVisitor
+from execution.engine import PlanCache
+
+
 def compile_query(sql, file, optimize=False):
+    cached = PlanCache.load(sql, file)
+    if cached:
+        return cached
 
-    # Plan  mock solo para efectos de pruebas y desarrollo
-    # Luego debe conectarse toda la lógica usando ANTLR
+    input_stream = InputStream(sql)
 
-    plan = {
-        "op": "Project",
-        "columns": ["*"],
-        "input": {
-            "op": "Scan",
-            "source": file
-        }
-    }
+    lexer = QueryRunnerLexer(input_stream)
+    lexer.removeErrorListeners()
+    lexer.addErrorListener(ThrowingErrorListener())
 
-    if optimize:
-        plan["optimized"] = True
+    token_stream = CommonTokenStream(lexer)
+
+    parser = QueryRunnerParser(token_stream)
+    parser.removeErrorListeners()
+    parser.addErrorListener(ThrowingErrorListener())
+
+    tree = parser.consulta()
+
+    visitor = QueryPlanVisitor(file=file, optimize=optimize)
+    visitor.set_raw_query(sql)
+    plan = visitor.visit(tree)
+
+    PlanCache.save(plan, sql, file)
 
     return plan

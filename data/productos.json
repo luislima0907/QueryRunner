@@ -1,0 +1,10 @@
+[
+  {"producto": "Laptop", "categoria": "Computo", "precio": 1200, "stock": 15},
+  {"producto": "Mouse", "categoria": "Computo", "precio": 25, "stock": 200},
+  {"producto": "Teclado", "categoria": "Computo", "precio": 80, "stock": 50},
+  {"producto": "Monitor", "categoria": "Computo", "precio": 350, "stock": 30},
+  {"producto": "Silla", "categoria": "Muebles", "precio": 450, "stock": 10},
+  {"producto": "Escritorio", "categoria": "Muebles", "precio": 800, "stock": 5},
+  {"producto": "Audifonos", "categoria": "Audio", "precio": 60, "stock": 100},
+  {"producto": "Parlante", "categoria": "Audio", "precio": 150, "stock": 25}
+]

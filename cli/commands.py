@@ -1,4 +1,5 @@
 import json
+import time
 
 from compiler.pipeline import compile_query
 from execution.engine import execute_plan
@@ -11,6 +12,8 @@ def run_query(sql, file, format, verbose, optimize, target):
         print(">> Optimize:", optimize)
         print(">> Target:", target)
 
+    start = time.time()
+
     plan = compile_query(sql=sql, file=file, optimize=optimize)
 
     if verbose:
@@ -19,7 +22,9 @@ def run_query(sql, file, format, verbose, optimize, target):
 
     results = execute_plan(plan, verbose=verbose)
 
-    output = format_output(results, format)
+    elapsed = time.time() - start
+
+    output = format_output(results, format, elapsed)
 
     print("Results:\n")
     print(output)
@@ -31,7 +36,7 @@ def run_query(sql, file, format, verbose, optimize, target):
             save_output(output, target)
 
 
-def format_output(results, format_type):
+def format_output(results, format_type, elapsed=0.0):
     if format_type == "json":
         return json.dumps(results, indent=2, default=str)
 
@@ -48,10 +53,10 @@ def format_output(results, format_type):
         return "\n".join(lines)
 
     else:
-        return render_table(results)
+        return render_table(results, elapsed)
 
 
-def render_table(results):
+def render_table(results, elapsed=0.0):
     if not results:
         return "No se encontraron resultados para los criterios buscados"
 
@@ -66,9 +71,11 @@ def render_table(results):
     separator = "-+-".join("-" * col_widths[h] for h in headers)
 
     rows = []
+    total_rows = len(results)
     for row in results:
         rows.append(" | ".join(str(row[h]).ljust(col_widths[h]) for h in headers))
-
+    rows.append(separator)
+    rows.append(f"{total_rows} Registros encontrados en ({elapsed:.4f} seg)")
     return "\n".join([header_row, separator] + rows)
 
 

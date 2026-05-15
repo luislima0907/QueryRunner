@@ -8,8 +8,9 @@
   y poder reutilizarlos usando las flechas arriba y abajo del teclado
 
 """
-import readline
 import shlex
+from prompt_toolkit import PromptSession
+from prompt_toolkit.history import FileHistory
 
 from cli.commands import run_query
 
@@ -23,16 +24,14 @@ def start_repl():
     print("Welcome to QueryRunner app (type 'exit' to quit the app)")
     print("Type ':help' for more information")
 
-    # Lectura del historico de comandos
-    try:
-        readline.read_history_file(HISTORY_FILE)
-    except FileNotFoundError:
-        pass
+    # Crear sesión con historial de comandos
+    history = FileHistory(HISTORY_FILE)
+    session = PromptSession(history=history)
 
     # Proceso de lectura de instrucciones desde terminal interactiva
     while True:
         try:
-            line = input("qrunner> ").strip()
+            line = session.prompt("qrunner> ").strip()
 
             if not line:
                 continue
@@ -55,15 +54,13 @@ def start_repl():
 
             print("Execute command: " + query)
 
-            run_query(sql=query,file=opts["file"],format=opts["format"],verbose=opts["verbose"],
-                      optimize=opts["optimize"],target=opts["target"])
+            run_query(sql=query, file=opts["file"], format=opts["format"], verbose=opts["verbose"],
+                      optimize=opts["optimize"], target=opts["target"], algorithm=opts["algorithm"])
 
         except KeyboardInterrupt:
             print("\nInterrupted")
         except Exception as e:
             print(f"Error: {e}")
-
-    readline.write_history_file(HISTORY_FILE)
 
 
 """
@@ -76,15 +73,17 @@ def handle_meta_command(cmd):
             [COMMANDS]:
                 :help           -> Mostrar ayuda
                 exit            -> Salir
-                query           -> Query para consula sobre archivos
+                query           -> Query para consulta sobre archivos
             [OPTIONS]:
                 --file      -f  -> Archivo fuente para consulta
-                --format    -f  -> Format de salida consulta
+                --format    -o  -> Formato de salida consulta
                 --target    -t  -> Destino de salida para consulta
                 --verbose   -v  -> Verbosidad de salida
-                --optimize  -o  -> Optimize de salida
-            [EXAMPLE]:]
-                qrunner> LEER ventas.csv EXTRAER * DONDE total > 500 Y categoria = "electronica" --target salida.json --format json
+                --optimize      -> Optimizar consulta
+                --algorithm NOMBRE_ALGORITMO  -> Algoritmo: FULL_SCAN, INDEX_SCAN, HASH_LOOKUP, BINARY_SEARCH
+            [EXAMPLE]:
+                qrunner> LEER data/ventas.json EXTRAER * DONDE total > 500 Y categoria = "electronica" --format json
+                qrunner> LEER data/productos.json EXTRAER * DONDE precio = 100 --algorithm INDEX_SCAN
             """)
 
 
@@ -94,7 +93,7 @@ def handle_meta_command(cmd):
 """
 def parse_repl_input(tokens):
 
-    args = {"file": None,"format": "table","verbose": False,"optimize": True,"target": None}
+    args = {"file": None, "format": "table", "verbose": False, "optimize": True, "target": None, "algorithm": None}
 
     query_tokens = []
 
@@ -102,19 +101,23 @@ def parse_repl_input(tokens):
     while i < len(tokens):
         token = tokens[i]
 
-        if token == "--file":
+        if token == "--file" or token == "-f":
             args["file"] = tokens[i + 1]
             i += 2
 
-        elif token == "--format":
+        elif token == "--format" or token == "-o":
             args["format"] = tokens[i + 1]
             i += 2
 
-        elif token == "--target":
+        elif token == "--target" or token == "-t":
             args["target"] = tokens[i + 1]
             i += 2
 
-        elif token == "--verbose":
+        elif token == "--algorithm" or token == "-a":
+            args["algorithm"] = tokens[i + 1]
+            i += 2
+
+        elif token == "--verbose" or token == "-v":
             args["verbose"] = True
             i += 1
 

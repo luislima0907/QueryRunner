@@ -133,14 +133,6 @@ class QueryRunnerParser ( Parser ):
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_consulta
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterConsulta" ):
-                listener.enterConsulta(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitConsulta" ):
-                listener.exitConsulta(self)
-
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitConsulta" ):
                 return visitor.visitConsulta(self)
@@ -232,14 +224,6 @@ class QueryRunnerParser ( Parser ):
 
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_declaracionLectura
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterDeclaracionLectura" ):
-                listener.enterDeclaracionLectura(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitDeclaracionLectura" ):
-                listener.exitDeclaracionLectura(self)
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitDeclaracionLectura" ):
@@ -345,14 +329,6 @@ class QueryRunnerParser ( Parser ):
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_origen
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterOrigen" ):
-                listener.enterOrigen(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitOrigen" ):
-                listener.exitOrigen(self)
-
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitOrigen" ):
                 return visitor.visitOrigen(self)
@@ -408,14 +384,6 @@ class QueryRunnerParser ( Parser ):
 
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_columnas
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterColumnas" ):
-                listener.enterColumnas(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitColumnas" ):
-                listener.exitColumnas(self)
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitColumnas" ):
@@ -478,14 +446,6 @@ class QueryRunnerParser ( Parser ):
 
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_listaIds
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterListaIds" ):
-                listener.enterListaIds(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitListaIds" ):
-                listener.exitListaIds(self)
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitListaIds" ):
@@ -555,14 +515,6 @@ class QueryRunnerParser ( Parser ):
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_expresion
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpresion" ):
-                listener.enterExpresion(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpresion" ):
-                listener.exitExpresion(self)
-
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitExpresion" ):
                 return visitor.visitExpresion(self)
@@ -628,14 +580,6 @@ class QueryRunnerParser ( Parser ):
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_comparacion
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterComparacion" ):
-                listener.enterComparacion(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitComparacion" ):
-                listener.exitComparacion(self)
-
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitComparacion" ):
                 return visitor.visitComparacion(self)
@@ -694,14 +638,6 @@ class QueryRunnerParser ( Parser ):
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_operadorComparacion
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterOperadorComparacion" ):
-                listener.enterOperadorComparacion(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitOperadorComparacion" ):
-                listener.exitOperadorComparacion(self)
-
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitOperadorComparacion" ):
                 return visitor.visitOperadorComparacion(self)
@@ -753,14 +689,6 @@ class QueryRunnerParser ( Parser ):
 
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_valor
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterValor" ):
-                listener.enterValor(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitValor" ):
-                listener.exitValor(self)
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitValor" ):
@@ -822,14 +750,6 @@ class QueryRunnerParser ( Parser ):
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_orden
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterOrden" ):
-                listener.enterOrden(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitOrden" ):
-                listener.exitOrden(self)
-
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitOrden" ):
                 return visitor.visitOrden(self)
@@ -874,14 +794,6 @@ class QueryRunnerParser ( Parser ):
 
         def getRuleIndex(self):
             return QueryRunnerParser.RULE_identificador
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterIdentificador" ):
-                listener.enterIdentificador(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitIdentificador" ):
-                listener.exitIdentificador(self)
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitIdentificador" ):

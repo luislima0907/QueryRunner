@@ -4,6 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from execution.optimizer import SearchAlgorithmOptimizer
+
 
 CACHE_DIR = Path.home() / ".queryrunner_cache"
 
@@ -132,7 +134,7 @@ class PandasEngine:
         if can_chunk:
             result = PandasEngine._execute_chunked(source, use_cols, where, order_by, limit, verbose)
         else:
-            result = PandasEngine._execute_in_memory(source, source_format, use_cols, where, order_by, limit, verbose)
+            result = PandasEngine._execute_in_memory(source, source_format, use_cols, where, order_by, limit, verbose, plan)
 
         if result is None or result.empty:
             return []
@@ -143,10 +145,33 @@ class PandasEngine:
         return result.to_dict(orient="records")
 
     @staticmethod
-    def _execute_in_memory(source, source_format, use_cols, where, order_by, limit, verbose):
+    def _execute_in_memory(source, source_format, use_cols, where, order_by, limit, verbose, plan):
         df = PandasEngine._load_data(source, source_format, use_cols)
         if df is None or df.empty:
             return df
+        
+        # Detectar algoritmo de búsqueda
+        # Si se forzó un algoritmo, usarlo; si no, detectar automáticamente
+        if plan.get("forced_algorithm"):
+            forced_algo = plan.get("forced_algorithm")
+            # Obtener info del algoritmo forzado
+            if forced_algo == "BINARY_SEARCH":
+                algorithm_info = SearchAlgorithmOptimizer._get_binary_search_info(plan)
+            elif forced_algo == "HASH_LOOKUP":
+                algorithm_info = SearchAlgorithmOptimizer._get_hash_lookup_info(plan)
+            elif forced_algo == "INDEX_SCAN":
+                algorithm_info = SearchAlgorithmOptimizer._get_index_scan_info(plan)
+            else:
+                algorithm_info = "Escaneo completo del archivo"
+            
+            plan["search_algorithm"] = forced_algo
+            plan["algorithm_info"] = algorithm_info
+        else:
+            # Auto-detectar el mejor algoritmo
+            algorithm, algorithm_info = SearchAlgorithmOptimizer.choose_algorithm(plan, df)
+            plan["search_algorithm"] = algorithm
+            plan["algorithm_info"] = algorithm_info
+        
         df = PandasEngine._apply_filter(df, where, verbose)
         df = PandasEngine._apply_order(df, order_by)
         df = PandasEngine._apply_limit(df, limit)

@@ -58,9 +58,10 @@ def query(
     format: str = typer.Option("table", "--format", "-o"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
     optimize: bool = typer.Option(True, "--optimize"),
+    algorithm: Optional[str] = typer.Option(None, "--algorithm", "-a", help="Search algorithm: FULL_SCAN, INDEX_SCAN, BINARY_SEARCH, HASH_LOOKUP"),
     target: Optional[str] = typer.Option(None, "--target")):
 
-    run_query(sql, file, format, verbose, optimize, target)
+    run_query(sql, file, format, verbose, optimize, target, algorithm)
 
 if __name__ == '__main__':
     app()

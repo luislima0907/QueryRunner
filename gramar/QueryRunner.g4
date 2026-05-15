@@ -93,7 +93,7 @@ NUMERO
     ;
 
 IDENTIFICADOR
-    : (LETRA | '_') (LETRA | DIGITO | '_' | '.')*
+    : (LETRA | '_') (LETRA | DIGITO | '_' | '.' | '/')*
     ;
 
 fragment LETRA

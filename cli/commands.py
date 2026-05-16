@@ -2,10 +2,7 @@ import json
 import time
 
 from compiler.pipeline import compile_query
-from execution.engine import execute_plan, PandasEngine, detect_format
-from execution.optimizer import SearchAlgorithmOptimizer
-from pathlib import Path
-import pandas as pd
+from execution.engine import execute_plan
 
 
 def run_query(sql, file, format, verbose, optimize, target, algorithm=None):
@@ -39,7 +36,7 @@ def run_query(sql, file, format, verbose, optimize, target, algorithm=None):
     output = format_output(results, format, elapsed)
 
     print("Results:\n")
-    print(output)
+    print(render_table(results, elapsed))
 
     # Mostrar información del algoritmo utilizado después de ejecutar
     algorithm_used = plan.get("search_algorithm", "FULL_SCAN")

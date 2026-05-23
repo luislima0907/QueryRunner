@@ -1,7 +1,7 @@
 import hashlib
 from pathlib import Path
 
-from gramar.QueryRunnerVisitor import QueryRunnerVisitor
+from src.umgqrunner.gramar.QueryRunnerVisitor import QueryRunnerVisitor
 
 
 def _fingerprint(query, source):

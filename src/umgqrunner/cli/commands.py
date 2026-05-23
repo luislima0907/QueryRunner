@@ -1,8 +1,8 @@
 import json
 import time
 
-from compiler.pipeline import compile_query
-from execution.engine import execute_plan
+from src.umgqrunner.compiler.pipeline import compile_query
+from src.umgqrunner.execution.engine import execute_plan
 
 
 def run_query(sql, file, format, verbose, optimize, target, algorithm=None):

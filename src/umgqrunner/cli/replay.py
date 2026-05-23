@@ -12,7 +12,7 @@ import shlex
 from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
 
-from cli.commands import run_query
+from src.umgqrunner.cli.commands import run_query
 
 # Nombre para archivo de historico de comandos
 HISTORY_FILE = ".queryrunner_history"

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.umgqrunner.execution.optimizer import SearchAlgorithmOptimizer
+from umgqrunner.execution.optimizer import SearchAlgorithmOptimizer
 
 
 CACHE_DIR = Path.home() / ".queryrunner_cache"

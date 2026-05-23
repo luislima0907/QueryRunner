@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "umgqrunner"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
     { name="Job Jeremías González", email="jgonzalezg58@miumg.edu.gt" },
     { name="Luis Carlos Lima", email="llimap5@miumg.edu.gt" },

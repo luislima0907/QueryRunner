@@ -1,10 +1,10 @@
 from antlr4 import InputStream, CommonTokenStream
 
-from src.umgqrunner.gramar.QueryRunnerLexer import QueryRunnerLexer
-from src.umgqrunner.compiler.syntax_error_listener import ThrowingErrorListener
-from src.umgqrunner.gramar.QueryRunnerParser import QueryRunnerParser
-from src.umgqrunner.compiler.query_plan_visitor import QueryPlanVisitor
-from src.umgqrunner.execution.engine import PlanCache
+from umgqrunner.gramar.QueryRunnerLexer import QueryRunnerLexer
+from umgqrunner.compiler.syntax_error_listener import ThrowingErrorListener
+from umgqrunner.gramar.QueryRunnerParser import QueryRunnerParser
+from umgqrunner.compiler.query_plan_visitor import QueryPlanVisitor
+from umgqrunner.execution.engine import PlanCache
 
 
 def compile_query(sql, file, optimize=False):

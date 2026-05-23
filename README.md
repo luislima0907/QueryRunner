@@ -10,7 +10,7 @@ CLI tool para ejecución de consultas tipo SQL sobre archivos CSV o JSON
     ```
 - Instalación usando docker o podman
     ```bash
-     docker pull umgqrunner
+     docker pull jjgonzalezg/umgqrunner
     ```
   
 

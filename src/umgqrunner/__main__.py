@@ -2,8 +2,8 @@ from typing import Optional
 
 import typer
 
-from src.umgqrunner.cli.commands import run_query
-from src.umgqrunner.cli.replay import start_repl
+from umgqrunner.cli.commands import run_query
+from umgqrunner.cli.replay import start_repl
 
 app = typer.Typer(
     help="QueryRunner - SQL Engine for CSV/JSON",

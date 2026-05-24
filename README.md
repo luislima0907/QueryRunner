@@ -11,13 +11,13 @@ CLI tool para ejecución de consultas tipo SQL sobre archivos CSV o JSON
       ```bash
       pip install umgqrunner
       ```
-    Ejecucón de herramienta usando CLI interactivo:
+    Ejecución de herramienta usando CLI interactivo:
   
       ```bash
         python -m umgqrunner
       ```
     
-    ![Consola Interactiva1](docs/imgs/ConsoleQrunner1.heic)
+    ![Consola Interactiva1](docs/imgs/ConsoleQrunner4.png)
   - 
 - Instalación usando docker o podman:
   - Si tiene instalado en su computadora la herramienta para conetendores "Docker" o "Podman", puede descarga la imagen preconfigurada, con todo lo necesario sin tener python instalado en su máquina loca.
@@ -40,7 +40,7 @@ CLI tool para ejecución de consultas tipo SQL sobre archivos CSV o JSON
       -  "$(pwd):/app" - Se le indica al contenendor que monte dentro de su directorio /app del contenedor, el directorio actual de nuestra computadora, como un volumen, esto hace que el contenedor conzca y tenga acceso a todo lo que tengamos dentro de ese directorio
       -  "umgqrunner"  - nombre de la imagen con la cual queremos crear el contenedor
       
-  ![Consola Interactiva2](docs/imgs/ConsoleQrunner2.heic)
+     ![Consola Interactiva2](docs/imgs/ConsoleQrunner3.png)
 
 - [Ejemplos de comandos interactivos](docs/ejemplos.md)
 - [Guia de Optimización de plan de ejecución](docs/optimization.md)

@@ -7,7 +7,7 @@ CLI tool para ejecución de consultas tipo SQL sobre archivos CSV o JSON
 - Directamente sobre su entorno Python:
   - Tener instalado python en su computadora.
   - Instalar la herramienta pip para poder realizar la instalación del paquete desde el index de PyPi
-  - Una vez preparado su ambiente, ejecutar el siguiente comando:
+  - Una vez preparado su ambiente ejecutar el siguiente comando:
       ```bash
       pip install umgqrunner
       ```
@@ -18,9 +18,9 @@ CLI tool para ejecución de consultas tipo SQL sobre archivos CSV o JSON
       ```
     
     ![Consola Interactiva1](docs/imgs/ConsoleQrunner4.png)
-  - 
+  
 - Instalación usando docker o podman:
-  - Si tiene instalado en su computadora la herramienta para conetendores "Docker" o "Podman", puede descarga la imagen preconfigurada, con todo lo necesario sin tener python instalado en su máquina loca.
+  - Si tiene instalado en su computadora la herramienta para conetendores "Docker" o "Podman", puede descarga la imagen preconfigurada con todo lo necesario sin tener python instalado en su máquina loca.
     - Para Hacerlo siga los sigueintes pasos:  Descargue la imagen desde Docker hub con el siguiente comando
         ```bash
          docker pull jjgonzalezg/umgqrunner
@@ -34,11 +34,11 @@ CLI tool para ejecución de consultas tipo SQL sobre archivos CSV o JSON
     - La estructura del comando es la siguiente:
       - podman / docker -  es el enginer con el que ejecutará aplicaciones dentro de un contenedor
       - run - crea un contenedor basado en una imagen 
-      -  "--rm"  - Le indica a docker /podman que ejecute el contenedor y mientras el aplicativo se esté ejecutando, lo mantenga vivo, al terminar su ejecución que mate el contenedor
+      -  "--rm"  - Le indica a docker /podman que ejecute el contenedor y mientras el aplicativo se esté ejecutando lo mantenga vivo, al terminar su ejecución que mate el contenedor, esto evita que se queden recurso tomados de su computadora una vez Ud deja de usar la herramienta.
       -  "-it" - Le indica a docker / podman que debe quedarse ecuchando las interaciones del teclado, esto es necesario para mantener la CLI interactiva de la herramienta
-      -  "-v"  - Le indicamos que montaremos un volumen dentro del contenedor (en este caso mapeando un directorio local de nuestra computadora, dentro del directorio /app del contenedor)
-      -  "$(pwd):/app" - Se le indica al contenendor que monte dentro de su directorio /app del contenedor, el directorio actual de nuestra computadora, como un volumen, esto hace que el contenedor conzca y tenga acceso a todo lo que tengamos dentro de ese directorio
-      -  "umgqrunner"  - nombre de la imagen con la cual queremos crear el contenedor
+      -  "-v"  - Le indicamos que montaremos un volumen dentro del contenedor (en este caso mapeando un directorio local de nuestra computadora dentro del directorio /app del contenedor)
+      -  "$(pwd):/app" - Se le indica al contenedor que monte dentro de su directorio /app, el directorio actual de nuestra computadora como un volumen, esto hace que el contenedor conozca y tenga acceso a todos los archivos que tengamos dentro de ese directorio
+      -  "umgqrunner"  - Nombre de la imagen con la cual queremos crear el contenedor
       
      ![Consola Interactiva2](docs/imgs/ConsoleQrunner3.png)
 

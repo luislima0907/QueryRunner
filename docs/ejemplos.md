@@ -1,0 +1,226 @@
+# Ejemplo de uso del modo CLI interactivo
+
+Primero desde la terminal de su SO coloquese en lo que será su directorio de trabajo, donde tien los archivos fuente que
+necesita explorar
+
+Ejecute el siguiente la herramienta sin comandos adicionales, ni parámetros.
+
+```bash
+python -m umgqrunner
+```
+
+Ejemplo de la estructura de un archivo json que necesitemos procesar:
+```json
+{
+    "id_venta": 1001,
+    "fecha": "2025-05-24",
+    "cliente": "Tech Solutions",
+    "producto": "Silla Ergonómica",
+    "categoria": "Muebles",
+    "precio_unitario": 185.0,
+    "cantidad": 2,
+    "total": 370.0
+}
+```
+
+### CASO 1: LECTURA BASICA - Todas las columnas
+
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER *
+```
+
+### CASO 2: EXTRAER COLUMNAS ESPECIFICAS
+
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, total
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER fecha, producto, precio_unitario
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER cliente, categoria, cantidad
+```
+
+
+### CASO 3: FILTROS SIMPLE (DONDE - UN OPERADOR)
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Muebles'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria != 'Electrónica'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 500
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE cantidad < 5
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE precio_unitario >= 100
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total <= 1000
+```
+
+
+### CASO 4: FILTROS COMPLEJOS (DONDE - Y - AND)
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Muebles' Y cantidad > 2
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 500 Y precio_unitario < 300
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, total DONDE categoria = 'Electrónica' Y cantidad >= 3
+```
+
+
+### CASO 5: FILTROS COMPLEJOS (DONDE - O - OR)
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Muebles' O categoria = 'Electrónica'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 5000 O cantidad > 20
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER cliente, producto, total DONDE cliente = 'Tech Solutions' O cliente = 'Innovate Corp'
+```
+
+
+### CASO 6: FILTROS MIXTOS (DONDE - Y - O - AND/OR)
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Muebles' Y cantidad > 2 O total > 2000
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE precio_unitario > 100 Y cantidad < 10 O categoria = 'Electrónica'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, producto DONDE total > 1000 O cantidad >= 5 Y categoria != 'Servicios'
+```
+
+
+### CASO 7: ORDENAMIENTO ASCENDENTE
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * ORDENAR POR id_venta ASCENDENTE
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * ORDENAR POR total ASCENDENTE
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER cliente, producto, total ORDENAR POR fecha ASCENDENTE
+```
+
+
+### CASO 8: ORDENAMIENTO DESCENDENTE
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * ORDENAR POR total DESCENDENTE
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * ORDENAR POR cantidad DESCENDENTE
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, precio_unitario ORDENAR POR precio_unitario DESCENDENTE
+```
+
+
+### CASO 9: ORDENAMIENTO POR DEFECTO (Sin especificar orden)
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * ORDENAR POR cliente
+```
+
+
+### CASO 10: LIMIT (HASTA - Limitar resultados)
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * HASTA 10
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * HASTA 50
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, total HASTA 5
+```
+
+
+### CASO 11: COMBINACIONES - Filtro + Ordenamiento
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 500 ORDENAR POR total DESCENDENTE
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Muebles' ORDENAR POR precio_unitario ASCENDENTE
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER cliente, producto, total DONDE cantidad > 5 ORDENAR POR total DESCENDENTE
+```
+
+
+### CASO 12: COMBINACIONES - Filtro + Ordenamiento + Limit
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 1000 ORDENAR POR total DESCENDENTE HASTA 20
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, total DONDE categoria != 'Servicios' ORDENAR POR fecha ASCENDENTE HASTA 15
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE cantidad > 3 Y precio_unitario < 200 ORDENAR POR cliente ASCENDENTE HASTA 25
+```
+
+
+### CASO 13: COMBINACIONES AVANZADAS - Filtros Complejos + Ordenamiento + Limit
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Electrónica' Y cantidad >= 5 O total > 2000 ORDENAR POR total DESCENDENTE HASTA 10
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER cliente, producto, categoria, total DONDE precio_unitario > 150 Y cantidad < 10 O categoria = 'Muebles' ORDENAR POR precio_unitario DESCENDENTE HASTA 20
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, fecha, total DONDE total > 500 O categoria = 'Servicios' Y cantidad > 2 ORDENAR POR fecha DESCENDENTE HASTA 30
+```
+
+
+### CASO 14: COLUMNAS ESPECIFICAS + Filtro Complejo
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, producto, total DONDE total > 1000 Y categoria = 'Muebles'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER fecha, cliente, categoria DONDE cantidad > 5 O total < 300
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER producto, precio_unitario, cantidad DONDE precio_unitario >= 200 Y cantidad < 8 O categoria = 'Electrónica'
+```
+
+
+### CASO 15: TESTS DE RENDIMIENTO (Pipeline Scan)
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER *
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Muebles'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 1000 Y cantidad > 5 O categoria = 'Electrónica'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * ORDENAR POR total DESCENDENTE
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE precio_unitario > 100 ORDENAR POR total DESCENDENTE HASTA 50
+```
+
+
+### CASO 16: OPERADORES DE COMPARACION - Todos los tipos
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria = 'Electrónica'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria != 'Servicios'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE categoria <> 'Servicios'
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 1500
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE cantidad < 5
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE precio_unitario >= 250
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total <= 800
+```
+
+
+### CASO 17: CON OPCIONES DE FORMATO
+```bash
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * DONDE total > 1000 --format json
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER id_venta, cliente, total HASTA 10 --format json
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * --format table
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER * --verbose
+```
+
+
+### CASOS DE ERROR (Para validar manejo de errores)
+```bash
+qrunner> LEER 'data/no_existe.json' EXTRAER *
+
+qrunner> LEER 'data/ventas_masivas_100k.json' *
+
+qrunner> LEER 'data/ventas_masivas_100k.json' EXTRAER columna_falsa
+```
+
+
+### COMANDO DE AYUDA
+```bash
+qrunner> :help
+```
+### COMANDO DE SALIDA DE MODO INTERACTIVO
+```bash
+qrunner> exit
+```
